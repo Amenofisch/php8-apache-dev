@@ -1,0 +1,41 @@
+services:
+  application:
+    user: application
+    build:
+      context: docker/application
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    ports:
+      - "8085:80"
+    volumes:
+      - ./src:/app
+    cap_add:
+      - SYS_PTRACE
+    privileged: true
+    env_file:
+      - docker/application/environment.yml
+
+  database:
+    image: mariadb:11
+    ports:
+      - "3306:3306"
+    volumes:
+      - database:/var/lib/mysql
+      - ./docker/database/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    env_file:
+      - docker/database/environment.yml
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8090:80"
+    environment:
+      - PMA_HOSTS=database
+      - PMA_ABSOLUTE_URI=http://localhost/phpmyadmin/
+    volumes:
+      - phpmyadmin:/sessions
+
+volumes:
+  database:
+  phpmyadmin:

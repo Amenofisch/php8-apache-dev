@@ -1,0 +1,17 @@
+php.memory_limit=512M
+session.gc_maxlifetime=43200
+fpm.pool.pm.max_children=20
+
+TZ=Europe/Berlin
+PHP_DATE_TIMEZONE=Europe/Berlin
+
+php.debugger=xdebug
+php.xdebug.remote_addr_header=REMOTE_ADDR
+
+# xdebug 3
+XDEBUG_MODE=debug,develop
+XDEBUG_CLIENT_PORT=9000
+XDEBUG_CLIENT_HOST=host.docker.internal
+XDEBUG_REMOTE_PORT=9000
+XDEBUG_REMOTE_CONNECT_BACK=0
+XDEBUG_REMOTE_HOST=host.docker.internal
